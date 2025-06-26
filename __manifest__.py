@@ -7,8 +7,9 @@
     'website': '',
     'category': '',
     'depends': ['base', ],
-    'data': [
-        
+    "data": [
+        "security/ir.model.access.csv",
+        "views/dashboard_block_views.xml"
     ],
     
     'application': True,
