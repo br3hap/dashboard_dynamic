@@ -95,3 +95,7 @@ class DashboardBlock(models.Model):
                     'width': f"{data['width']}px",
                 })
         return True
+    
+
+    def get_dashboard_vals(self, action_id, start_date=None, end_date=None):
+        pass
