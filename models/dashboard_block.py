@@ -70,3 +70,28 @@ class DashboardBlock(models.Model):
     edit_mode = fields.Boolean(string=_('Modo editar'))
 
 
+    
+    @api.onchange('model_id')
+    def _onchange_model_id(self):
+        if self.operation or self.measured_field_id:
+            self.operation = False
+            self.measured_field_id = False
+            self.group_by_id = False
+
+
+    def get_save_layout(self, grid_data_list):
+        for data in grid_data_list:
+            block = self.browse(int(data['id']))
+            if data.get('data-x'):
+                block.write({
+                    'translate_x': f"{data['data-x']}px",
+                    'translate_y': f"{data['data-y']}px",
+                    'data_x': data['data-x'],
+                    'data_y': data['data-y'],
+                })
+            if data.get('height'):
+                block.write({
+                    'height': f"{data['height']}px",
+                    'width': f"{data['width']}px",
+                })
+        return True
