@@ -9,6 +9,7 @@
     'depends': ['base', ],
     "data": [
         "security/ir.model.access.csv",
+        "views/dashboard_views.xml",
         "views/dashboard_block_views.xml",
         "views/dashboard_theme_views.xml"
     ],
