@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Dashboard_dynamic',
-    'version': '',
+    'name': 'Dashboard Dinámicos',
+    'version': '1.0',
     'summary': """ Dashboard Dinámico - odoo 18 """,
-    'author': '',
+    'author': 'Breithner Aquituari',
     'website': '',
     'category': '',
     'depends': ['base', ],
     "data": [
         "security/ir.model.access.csv",
-        "views/dashboard_block_views.xml"
+        "views/dashboard_block_views.xml",
+        "views/dashboard_theme_views.xml"
     ],
     
     'application': True,
