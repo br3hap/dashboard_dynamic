@@ -8,6 +8,8 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
+                <field name="model_id"/>
+                <field name="type"/>
             </list>
         </field>
     </record>
@@ -17,14 +19,57 @@
         <field name="name">view.dashboard.block.form</field>
         <field name="model">dashboard.block</field>
         <field name="arch" type="xml">
-            <form string="Dashboard Block">
+            <form>
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name"/>
-                        <h1>
-                            <field name="name" placeholder="Name..."/>
-                        </h1>
-                    </div>
+                    <group>
+                        <group>
+                            <div>
+                                <field name="name" class="oe_inline"
+                                       style="font-size: 30px;"
+                                       placeholder="Block Name" required="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="model_id"
+                                   required="[('edit_mode','=', True)]"
+                                   options="{'no_create_edit':True,'no_create': True}"/>
+                            <field name="client_action_id" invisible="1"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="edit_mode" invisible="1"/>
+                            <field name="operation"
+                                   required="[('edit_mode','=', True)]"/>
+                            <field name="measured_field_id"
+                                   required="[('edit_mode','=', True)]"
+                                   options="{'no_create_edit':True, 'no_create': True   }"
+                                   domain="[('model_id','=',model_id), ('ttype','in',['float','integer','monetary']), ('store', '=', True)]"/>
+                            <field name="filter" widget="domain"
+                                   options="{'model': 'model_name'}"/>
+                        </group>
+                    </group>
+                    <group string="Block Information">
+                        <group>
+                            <field name="type" required="1"/>
+                            <field name="graph_type"
+                                   invisible="type == 'tile'"/>
+                            <field name="fa_icon"
+                                   invisible="type == 'graph'"/>
+                            <field name="group_by_id" invisible="type == 'tile'"
+                                   options="{'no_create_edit':True, 'no_create': True}"
+                                   required="[('edit_mode','=', True),('type','=','graph')]"
+                                   domain="[('model_id','=',model_id), ('ttype','!=','one2many'), ('store', '=', True)]"/>
+                            <field name="tile_color"
+                                   invisible="type == 'graph'"
+                                   widget="color"/>
+                            <field name="val_color"
+                                   invisible="type == 'graph'"
+                                   widget="color"/>
+                            <field name="text_color"
+                                   invisible="type == 'graph'"
+                                   widget="color"/>
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>
@@ -50,12 +95,17 @@
         <field name="res_model">dashboard.block</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
-        <field name="context">{}</field>
+        <field name="context">{'default_edit_mode' : True}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new Dashboard Block.
             </p>
         </field>
     </record>
+
+
+    <menuitem name="Dashboard Blocks" id="dashboard_block_menu"
+        parent="dashboard_dynamic.menu_dashboard"
+        sequence="5" action="action_dashboard_block"/>
 
 </odoo>
