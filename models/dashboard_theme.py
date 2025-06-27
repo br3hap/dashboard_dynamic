@@ -25,8 +25,10 @@ class DashboardTheme(models.Model):
 
     @api.constrains('name', 'color_x', 'color_y', 'color_z')
     def save_record(self):
-        pass
+        self.body = f"<div style='width:300px; height:300px;background-image: linear-gradient(50deg, {self.color_x} 0%, {self.color_y} 46%, {self.color_z} 100%);'/>"
+        self.style = f"background-image: linear-gradient(50deg, {self.color_x} 0%, {self.color_y} 46%, {self.color_z} 100%);"
 
 
     def get_records(self):
-        pass
+        records = self.search_read([], ['name', 'style'])
+        return records
